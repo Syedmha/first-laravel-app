@@ -41,31 +41,30 @@ class ReadCsvFile extends Command
         $csvFile=fopen($file,'r');
         if($csvFile !== false){
             while(($row = fgetcsv($csvFile)) !== false){
-                // $data[]= $row;
                 $uuid = $row[0];
                 $timestamp = strtotime($row[1]);
                 $description = $row[2];
                 $amount = floatval($row[3]);
 
-                // $transactionDate = strtotime($timestamp);
-                // $transactionDate = new datetime.datetime($timestamp);
-                $dayDifference = date('d',$timestamp)-$dueDate;
-                if(  $dayDifference<=04){
-                    print_r(date('d/m/y',$timestamp)) ;
-                    print_r("||");
+                $dayDifference = date('d',$timestamp);
+                if( $dayDifference>=30 || $dayDifference<=04){
+                    if(abs($expectedAmount-$amount)<=0.01){
+                        
+                    }
                 }
 
             // print_r(date('d',$timestamp)-$dueDate);
                
+print_r($data);
                 
             }
             
             
-
             fclose($csvFile);
         }
         else{
             $this->error("Unable to open the file:" . $file);
         }
+
     }
 }
