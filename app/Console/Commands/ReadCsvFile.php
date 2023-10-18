@@ -44,19 +44,25 @@ class ReadCsvFile extends Command
                 $uuid = $row[0];
                 $timestamp = strtotime($row[1]);
                 $description = $row[2];
-                $amount = floatval($row[3]);
+                $amount = $row[3];
+                $status = $row[4];
+                $pureAmount = floatval(str_replace("£"," ", $amount));
 
                 $dayDifference = date('d',$timestamp);
-                if( $dayDifference>=30 || $dayDifference<=04){
-                    if(abs($expectedAmount-$amount)<=0.01){
-                        
+                if( $dayDifference>=30 || $dayDifference<=9){
+                    if($status === 'Completed'){
+                        if($pureAmount === $expectedAmount || $description === $expectedDescription){
+                            $data = [
+                                "uuid" => $uuid,
+                                "timestamp" => date('yy/mm/dd', $timestamp),
+                                "description" => $description,
+                                "amount" => $amount,
+                            ];
+                            print_r($data);
+                        }
                     }
+                   
                 }
-
-            // print_r(date('d',$timestamp)-$dueDate);
-               
-print_r($data);
-                
             }
             
             
@@ -65,6 +71,7 @@ print_r($data);
         else{
             $this->error("Unable to open the file:" . $file);
         }
+
 
     }
 }
