@@ -50,7 +50,7 @@ class ReadCsvFile extends Command
 
                 $dayDifference = date('d',$timestamp);
                 if( $dayDifference>=30 || $dayDifference<=9){
-                    if($status === 'Completed'){
+
                         if($pureAmount === $expectedAmount || $description === $expectedDescription){
                             $data = [
                                 "uuid" => $uuid,
@@ -60,7 +60,7 @@ class ReadCsvFile extends Command
                             ];
                             print_r($data);
                         }
-                    }
+
                    
                 }
             }
